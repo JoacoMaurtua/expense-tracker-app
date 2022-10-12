@@ -1,4 +1,4 @@
-import { View, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import ExpenseItem from '../components/ExpenseItem';
 
@@ -12,8 +12,19 @@ const tempExpenses = [
 
 export default function ExpensesList() {
   return (
-    <View>
-      <Text>ExpensesList</Text>
+    <View style={styles.container}>
+      <ScrollView>
+        {tempExpenses.map((expense)=>(
+          <ExpenseItem key={expense.id} title={expense.title} date={expense.date} amount={expense.amount}/>
+        ))}
+      </ScrollView>
     </View>
   )
-}
+};
+
+
+const styles = StyleSheet.create({
+ container:{
+  padding: 16,
+ }
+})

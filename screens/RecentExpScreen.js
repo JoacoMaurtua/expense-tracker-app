@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import IconButton from '../components/IconButton';
+import ExpensesList from '../components/ExpensesList';
 
 export default function RecentExpScreen({navigation}) {
 
@@ -25,7 +26,7 @@ export default function RecentExpScreen({navigation}) {
 
   return (
     <View>
-      <Text>RecentExpScreen</Text>
+      <ExpensesList/>
     </View>
   )
 }
