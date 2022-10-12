@@ -1,5 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,6 +6,8 @@ import RecentExpScreen from './screens/RecentExpScreen';
 import AllExpScreen from './screens/AllExpScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import ManageExpScreen from './screens/ManageExpScreen';
+import { GlobalStyles } from './styles';
 
 
 const Stack = createNativeStackNavigator();
@@ -17,12 +18,12 @@ function MyTabsNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: '#20b2aa' },
-        headerTintColor: 'white',
-        tabBarActiveBackgroundColor: '#20b2aa',
-        tabBarInactiveBackgroundColor: '#20b2aa',
-        tabBarActiveTintColor: '#ffd700',
-        tabBarInactiveTintColor: '#f8f8ff',
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: GlobalStyles.colors.primary50,
+        tabBarActiveBackgroundColor: GlobalStyles.colors.primary500,
+        tabBarInactiveBackgroundColor: GlobalStyles.colors.primary500,
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        tabBarInactiveTintColor: GlobalStyles.colors.primary50,
       }}
     >
       <Tab.Screen
@@ -60,7 +61,7 @@ function MyTabsNavigator() {
 export default function App() {
   return (
     <>
-      <StatusBar animated={true} backgroundColor="#20b2aa" style="light" />
+      <StatusBar animated={true} backgroundColor={GlobalStyles.colors.primary500} style="light" />
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -69,6 +70,11 @@ export default function App() {
             options={{
               headerShown: false,
             }}
+          />
+
+          <Stack.Screen
+            name="Manage"
+            component={ManageExpScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>
