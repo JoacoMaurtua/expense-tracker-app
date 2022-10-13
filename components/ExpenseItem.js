@@ -28,11 +28,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
     padding: 3,
-    margin: 8
+    margin: 4,
+    flexDirection: 'row',
+   
   },
 
   dataContainer:{
-    flexDirection: 'row'
+    flexDirection: 'column'
   },
 
   dataText:{
@@ -44,11 +46,15 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.primary50,
     alignItems: 'center',
     textAlign: 'center',
-    padding: 10,
+    marginLeft: 180,
+    width: 60,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
 
   amountText:{
     color: GlobalStyles.colors.primary700,
+    marginTop: 15,
   }
 
 })
