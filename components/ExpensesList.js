@@ -19,13 +19,13 @@ export default function ExpensesList({ expenses }) {
       data={expenses}
       renderItem = {renderExpenses}
       keyExtractor = {(item)=>item.id}
-      style={styles.container}
+     // style={styles.container}
     />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    padding: 12,
   },
 });

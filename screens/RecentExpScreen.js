@@ -28,8 +28,8 @@ export default function RecentExpScreen({navigation}) {
   
 
   return (
-    <View>
+    <>
       <ExpenseOutput expenses={tempExpenses} periodName="Last 7 days"/>
-    </View>
+    </>
   )
 }

@@ -5,8 +5,8 @@ import { tempExpenses } from '../DUMMY';
 
 export default function AllExpScreen() {
   return (
-    <View>
+    <>
       <ExpenseOutput expenses={tempExpenses} periodName="Foreva"/>
-    </View>
+    </>
   )
 }

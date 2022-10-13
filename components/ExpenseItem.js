@@ -19,7 +19,6 @@ export default function ExpenseItem({title, date, amount}) {
 const styles = StyleSheet.create({
   container:{
     backgroundColor: GlobalStyles.colors.primary500,
-    flex: 1,
     borderRadius: 8,
     overflow: 'hidden',
     elevation: 8,
@@ -27,10 +26,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
-    padding: 3,
-    margin: 4,
+    padding: 8,
+    marginBottom: 10,
     flexDirection: 'row',
+    justifyContent: 'space-between',
    
+    
   },
 
   dataContainer:{
@@ -40,21 +41,23 @@ const styles = StyleSheet.create({
   dataText:{
     color: GlobalStyles.colors.primary50,
     fontSize: 18,
+    
   },
 
   amountContainer:{
     backgroundColor: GlobalStyles.colors.primary50,
     alignItems: 'center',
     textAlign: 'center',
-    marginLeft: 180,
-    width: 60,
-    borderRadius: 8,
+    padding: 6,
+    borderRadius: 3,
     overflow: 'hidden',
+    justifyContent: 'center'
   },
 
   amountText:{
     color: GlobalStyles.colors.primary700,
-    marginTop: 15,
+    fontWeight: 'bold',
+   
   }
 
 })
