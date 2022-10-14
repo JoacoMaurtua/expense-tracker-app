@@ -2,18 +2,37 @@ import { View, FlatList, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 import ExpenseItem from '../components/ExpenseItem';
 
-function renderExpenses(itemData) {
-  return (
-    <ExpenseItem
-      key={itemData.item.id}
-      title={itemData.item.title}
-      date={itemData.item.date}
-      amount={itemData.item.amount}
-    />
-  );
-}
 
-export default function ExpensesList({ expenses }) {
+export default function ExpensesList({ expenses, navigation }) {
+
+  function renderExpenses(itemData) {
+
+    const item = itemData.item
+
+    //desestructurar las props del objeto:
+    const expenseItemProps = {
+      id: item.id,
+      title: item.title,
+      date: item.date,
+      amount: item.amount
+    }
+
+    //funcion para enviar a otra vista: 
+    function pressHandler(){
+      navigation.navigate('ManageExpense', {...expenseItemProps})
+    };
+
+    return (
+      <ExpenseItem
+        key={item.id}
+        title={item.title}
+        date={item.date}
+        amount={item.amount}
+        onPress={pressHandler}
+      />
+    );
+  }
+  
   return (
     <FlatList
       data={expenses}

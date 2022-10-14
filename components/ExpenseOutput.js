@@ -4,11 +4,11 @@ import ExpenseSummary from './ExpenseSummary'
 import ExpensesList from './ExpensesList'
 import { GlobalStyles } from '../styles'
 
-export default function ExpenseOutput({expenses, periodName}) { //aqui debo traeer la data de context
+export default function ExpenseOutput({expenses, periodName, navigation}) { //aqui debo traeer la data de context
   return (
     <View style={styles.container}>
       <ExpenseSummary expenses = {expenses} periodName={periodName}/>
-      <ExpensesList expenses = {expenses}/>
+      <ExpensesList expenses = {expenses} navigation={navigation}/>
     </View>
   )
 };

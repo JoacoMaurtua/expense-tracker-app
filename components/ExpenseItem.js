@@ -1,25 +1,28 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { Pressable, View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { GlobalStyles } from '../styles';
+import { getFormattedDate } from '../Util/date';
 
-export default function ExpenseItem({title, date, amount}) {
+export default function ExpenseItem({ title, date, amount, onPress }) {
   return (
-    <View style={styles.container}>
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataText}>{title}</Text>
-        <Text style={styles.dataText}>{date}</Text>
+    <Pressable onPress={onPress}>
+      <View style={styles.container}>
+        <View style={styles.dataContainer}>
+          <Text style={styles.titleText}>{title}</Text>
+          <Text style={styles.dateText}>{getFormattedDate(date)}</Text>
+        </View>
+        <View style={styles.amountContainer}>
+          <Text style={styles.amountText}>{amount.toFixed(2)}</Text>
+        </View>
       </View>
-      <View style={styles.amountContainer}>
-        <Text style={styles.amountText}>{amount}</Text>
-      </View>
-    </View>
-  )
-};
+    </Pressable>
+  );
+}
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     backgroundColor: GlobalStyles.colors.primary500,
-    borderRadius: 8,
+    borderRadius: 6,
     overflow: 'hidden',
     elevation: 8,
     shadowColor: 'black',
@@ -27,37 +30,38 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
     padding: 8,
-    marginBottom: 10,
+    marginBottom: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
-   
-    
   },
 
-  dataContainer:{
-    flexDirection: 'column'
+  dataContainer: {
+    flexDirection: 'column',
   },
 
-  dataText:{
+  titleText: {
     color: GlobalStyles.colors.primary50,
-    fontSize: 18,
-    
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 
-  amountContainer:{
+  dateText: {
+    color: GlobalStyles.colors.primary50,
+    fontSize: 13,
+  },
+
+  amountContainer: {
     backgroundColor: GlobalStyles.colors.primary50,
     alignItems: 'center',
-    textAlign: 'center',
-    padding: 6,
+    padding: 8,
     borderRadius: 3,
     overflow: 'hidden',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    minWidth: 75,
   },
 
-  amountText:{
+  amountText: {
     color: GlobalStyles.colors.primary700,
     fontWeight: 'bold',
-   
-  }
-
-})
+  },
+});

@@ -73,7 +73,7 @@ export default function App() {
           />
 
           <Stack.Screen
-            name="Manage"
+            name="ManageExpense"
             component={ManageExpScreen}
           />
         </Stack.Navigator>
