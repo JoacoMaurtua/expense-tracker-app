@@ -8,7 +8,7 @@ export default function ExpenseOutput({expenses, periodName, navigation}) { //aq
   return (
     <View style={styles.container}>
       <ExpenseSummary expenses = {expenses} periodName={periodName}/>
-      <ExpensesList expenses = {expenses} navigation={navigation}/>
+      <ExpensesList expenses = {expenses}/>
     </View>
   )
 };

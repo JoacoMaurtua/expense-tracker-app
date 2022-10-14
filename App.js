@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import ManageExpScreen from './screens/ManageExpScreen';
 import { GlobalStyles } from './styles';
-
+import IconButton from './components/IconButton';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,14 +17,25 @@ const Tab = createBottomTabNavigator();
 function MyTabsNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({ //Para que el icon mande a manageExpense
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: GlobalStyles.colors.primary50,
         tabBarActiveBackgroundColor: GlobalStyles.colors.primary500,
         tabBarInactiveBackgroundColor: GlobalStyles.colors.primary500,
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
         tabBarInactiveTintColor: GlobalStyles.colors.primary50,
-      }}
+        //establecer un icono de cabecera general
+        headerRight: ({ tintColor }) => (
+          <IconButton
+            icon="add"
+            size={24}
+            onPress={() => {
+              navigation.navigate('ManageExpense')
+            }}
+            color={tintColor}
+          />
+        ),
+      })}
     >
       <Tab.Screen
         name="Recent Expenses"
@@ -46,11 +57,7 @@ function MyTabsNavigator() {
         options={{
           title: 'All Expenses',
           tabBarIcon: ({ color, size }) => (
-            <AntDesign
-              name="calendar"
-              color={color}
-              size={size}
-            />
+            <AntDesign name="calendar" color={color} size={size} />
           ),
         }}
       />
@@ -61,7 +68,11 @@ function MyTabsNavigator() {
 export default function App() {
   return (
     <>
-      <StatusBar animated={true} backgroundColor={GlobalStyles.colors.primary500} style="light" />
+      <StatusBar
+        animated={true}
+        backgroundColor={GlobalStyles.colors.primary500}
+        style="light"
+      />
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -72,10 +83,7 @@ export default function App() {
             }}
           />
 
-          <Stack.Screen
-            name="ManageExpense"
-            component={ManageExpScreen}
-          />
+          <Stack.Screen name="ManageExpense" component={ManageExpScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

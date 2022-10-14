@@ -3,7 +3,7 @@ import React from 'react';
 import ExpenseItem from '../components/ExpenseItem';
 
 
-export default function ExpensesList({ expenses, navigation }) {
+export default function ExpensesList({ expenses }) {
 
   function renderExpenses(itemData) {
 
@@ -17,18 +17,14 @@ export default function ExpensesList({ expenses, navigation }) {
       amount: item.amount
     }
 
-    //funcion para enviar a otra vista: 
+   /*  //funcion para enviar a otra vista: 
     function pressHandler(){
       navigation.navigate('ManageExpense', {...expenseItemProps})
-    };
+    }; */
 
     return (
       <ExpenseItem
-        key={item.id}
-        title={item.title}
-        date={item.date}
-        amount={item.amount}
-        onPress={pressHandler}
+        {...expenseItemProps}
       />
     );
   }
