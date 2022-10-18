@@ -9,6 +9,7 @@ import { AntDesign } from '@expo/vector-icons';
 import ManageExpScreen from './screens/ManageExpScreen';
 import { GlobalStyles } from './styles';
 import IconButton from './components/IconButton';
+import ExpensesContextProvider from './context/manageExpensesContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -74,27 +75,32 @@ export default function App() {
         backgroundColor={GlobalStyles.colors.primary500}
         style="light"
       />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle:{backgroundColor: GlobalStyles.colors.primary500},
-            headerTintColor: 'white',
-          }}
-        
-        >
-          <Stack.Screen
-            name="MyTabs"
-            component={MyTabsNavigator}
-            options={{
-              headerShown: false,
+      <ExpensesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+              headerTintColor: 'white',
             }}
-          />
+          >
+            <Stack.Screen
+              name="MyTabs"
+              component={MyTabsNavigator}
+              options={{
+                headerShown: false,
+              }}
+            />
 
-          <Stack.Screen name="ManageExpense" component={ManageExpScreen} options={{
-            presentation: 'modal',
-          }}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen
+              name="ManageExpense"
+              component={ManageExpScreen}
+              options={{
+                presentation: 'modal',
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ExpensesContextProvider>
     </>
   );
 }

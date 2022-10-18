@@ -21,18 +21,18 @@ export default function ManageExpScreen({ navigation, route }) {
   }
 
   function cancelHandler(){
-
+    navigation.goBack();
   }
 
   function confirmHandler(){
-
+    navigation.goBack();
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.buttons}>
         <Button style={styles.button} mode='flat' onPress={cancelHandler}>Cancel</Button>
-        <Button style={styles.button} onPress={cancelHandler}>{isEditing ? 'Update' : 'Add'}</Button>
+        <Button style={styles.button} onPress={confirmHandler}>{isEditing ? 'Update' : 'Add'}</Button>
       </View>
       {isEditing && (
         <View style={styles.deleteContainer}>
