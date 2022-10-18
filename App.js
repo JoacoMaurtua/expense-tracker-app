@@ -17,7 +17,8 @@ const Tab = createBottomTabNavigator();
 function MyTabsNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({ navigation }) => ({ //Para que el icon mande a manageExpense
+      screenOptions={({ navigation }) => ({
+        //Para que el icon mande a manageExpense
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: GlobalStyles.colors.primary50,
         tabBarActiveBackgroundColor: GlobalStyles.colors.primary500,
@@ -30,7 +31,7 @@ function MyTabsNavigator() {
             icon="add"
             size={24}
             onPress={() => {
-              navigation.navigate('ManageExpense')
+              navigation.navigate('ManageExpense');
             }}
             color={tintColor}
           />
@@ -74,7 +75,13 @@ export default function App() {
         style="light"
       />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle:{backgroundColor: GlobalStyles.colors.primary500},
+            headerTintColor: 'white',
+          }}
+        
+        >
           <Stack.Screen
             name="MyTabs"
             component={MyTabsNavigator}
@@ -83,7 +90,9 @@ export default function App() {
             }}
           />
 
-          <Stack.Screen name="ManageExpense" component={ManageExpScreen} />
+          <Stack.Screen name="ManageExpense" component={ManageExpScreen} options={{
+            presentation: 'modal',
+          }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>
