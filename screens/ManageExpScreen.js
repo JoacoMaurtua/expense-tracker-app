@@ -2,6 +2,7 @@ import { View, StyleSheet } from 'react-native';
 import React, { useLayoutEffect } from 'react';
 import IconButton from '../components/IconButton';
 import { GlobalStyles } from '../styles';
+import Button from '../components/Button';
 
 export default function ManageExpScreen({ navigation, route }) {
   const editedExpenseId = route.params?.expenseId;
@@ -19,13 +20,25 @@ export default function ManageExpScreen({ navigation, route }) {
     console.log('delete expense');
   }
 
+  function cancelHandler(){
+
+  }
+
+  function confirmHandler(){
+
+  }
+
   return (
     <View style={styles.container}>
+      <View style={styles.buttons}>
+        <Button style={styles.button} mode='flat' onPress={cancelHandler}>Cancel</Button>
+        <Button style={styles.button} onPress={cancelHandler}>{isEditing ? 'Update' : 'Add'}</Button>
+      </View>
       {isEditing && (
         <View style={styles.deleteContainer}>
           <IconButton
             icon="trash"
-            color={GlobalStyles.colors.error500}
+            color={'#f08080'}
             size={36}
             onPress={deleteExpense}
           />
@@ -49,6 +62,18 @@ const styles = StyleSheet.create({
     borderTopColor: GlobalStyles.colors.primary200,
     alignItems: 'center'
   },
+
+  buttons:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  button:{
+    minWidth: 120,
+    marginHorizontal: 8,
+  },
+
 })
 
 /* 
