@@ -1,4 +1,4 @@
-import { View, FlatList, StyleSheet, ScrollView } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import React from 'react';
 import ExpenseItem from '../components/ExpenseItem';
 

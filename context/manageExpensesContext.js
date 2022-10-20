@@ -5,7 +5,7 @@ export const ManageExpensesContext = createContext({
   expenses: [],
   addExpense: ({ title, amount, date }) => {},
   removeExpense: (id) => {},
-  editExpense: (id, { title, amount, date }) => {},
+  updateExpense: (id, { title, amount, date }) => {},
 });
 
 //reducer(logica de cada funcion)
@@ -50,8 +50,15 @@ function ExpensesContextProvider({ children }) {
     dispatch({ type: 'UPDATE', payload: { id:id, data:expenseData } });
   }
 
+  const value = {
+    expenses: expensesState,
+    addExpense: addExpense,
+    deleteExpense: deleteExpense,
+    updateExpense: updateExpense
+  }
+
   return (
-    <ManageExpensesContext.Provider value={expensesState}>
+    <ManageExpensesContext.Provider value={value}>
       {children}
     </ManageExpensesContext.Provider>
   );
