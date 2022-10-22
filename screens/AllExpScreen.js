@@ -9,7 +9,7 @@ export default function AllExpScreen() {
 
   return (
     <>
-      <ExpenseOutput expenses={expensesCotext.expenses} periodName="Foreva" />
+      <ExpenseOutput expenses={expensesCotext.expenses} periodName="Foreva" fallback="No expenses in the last times"/>
     </>
   );
 }
