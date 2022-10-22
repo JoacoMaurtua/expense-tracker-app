@@ -43,7 +43,7 @@ function MyTabsNavigator() {
         name="Recent Expenses"
         component={RecentExpScreen}
         options={{
-          title: 'Recent Expensessss',
+          title: 'Recent Expenses',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="timer-sand-empty"

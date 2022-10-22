@@ -4,7 +4,7 @@ import { tempExpenses } from '../Util/DUMMY';
 export const ManageExpensesContext = createContext({
   expenses: [],
   addExpense: ({ title, amount, date }) => {},
-  removeExpense: (id) => {},
+  deleteExpense: (id) => {},
   updateExpense: (id, { title, amount, date }) => {},
 });
 

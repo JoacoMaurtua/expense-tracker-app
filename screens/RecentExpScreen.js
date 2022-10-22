@@ -13,7 +13,7 @@ export default function RecentExpScreen() {
     const today = new Date(); //fecha actual
     const date7DaysAgo = getDateMinusDays(today,7) //fecha de hace 7 dias
 
-    return expense.date > date7DaysAgo;
+    return (expense.date >= date7DaysAgo) && (expense.date <= today);
 
   })
 
