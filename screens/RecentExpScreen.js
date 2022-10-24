@@ -1,7 +1,6 @@
 import { View, Text } from 'react-native';
 import React, { useContext } from 'react';
 import ExpenseOutput from '../components/ExpenseOutput';
-import { tempExpenses } from '../Util/DUMMY';
 import { ManageExpensesContext } from '../context/manageExpensesContext';
 import { getDateMinusDays } from '../Util/date';
 
