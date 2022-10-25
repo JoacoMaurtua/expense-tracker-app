@@ -10,6 +10,8 @@ export default function ExpenseForm({onCancel, onSubmit, submitLabelButton}) {
     title: '',
   });
 
+  const { amount, date, title } = inputs;
+
   function inputChangeHandler(inputIdentifer, enteredValue) {
     setInputs((curInputValues) => {
       return {
@@ -19,11 +21,15 @@ export default function ExpenseForm({onCancel, onSubmit, submitLabelButton}) {
     });
   };
 
-  function submitHandler(){
-
+  function submitHandler(){ //nuevo expense editado o agregado
+    const expenseData = {
+      amount: +inputValues.amount, //convertir string a entero
+      date: new Date(inputValues.date),
+      title: title
+    };
+    onSubmit(expenseData);
   }
 
-  const { amount, date, title } = inputs;
 
   return (
     <View style={styles.form}>

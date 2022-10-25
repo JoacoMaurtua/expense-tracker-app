@@ -2,7 +2,6 @@ import { View, StyleSheet } from 'react-native';
 import React, { useLayoutEffect, useContext } from 'react';
 import IconButton from '../components/IconButton';
 import { GlobalStyles } from '../styles';
-import Button from '../components/Button';
 import { ManageExpensesContext } from '../context/manageExpensesContext';
 import ExpenseForm from '../components/ExpenseForm';
 
@@ -29,19 +28,11 @@ export default function ManageExpScreen({ navigation, route }) {
     navigation.goBack();
   }
 
-  function confirmHandler() {
+  function confirmHandler(expenseData) {
     if (isEditing) {
-      expensesContext.updateExpense(editedExpenseId, {
-        title: 'Test edit',
-        amount: 200,
-        date: new Date('2022-10-22'),
-      });
+      expensesContext.updateExpense(editedExpenseId, expenseData);
     } else {
-      expensesContext.addExpense({
-        title: 'Test add',
-        amount: 200,
-        date: new Date('2022-10-22'),
-      });
+      expensesContext.addExpense(expenseData);
     }
     navigation.goBack();
   }
