@@ -9,11 +9,12 @@ export default function ExpenseForm() {
     title: '',
   });
 
-  function amountChangeHandler(event) {
-    const {name,value} = event.target;
-    setInputs({
-      ...inputs,
-      [name]:value
+  function inputChangeHandler(inputIdentifer, enteredValue) {
+    setInputs((curInputValues)=>{
+      return{
+        ...curInputValues,
+        [inputIdentifer]: enteredValue, //[name]:value
+      }
     });
   };
 
@@ -24,13 +25,12 @@ export default function ExpenseForm() {
       <Text style={styles.title}>Your Expense</Text>
       <View style={styles.columContainer}>
         <Input
-          name="amount"
-          value={amount}
           style={styles.rowContainer}
           label="Amount"
           textInputConfig={{
             keyboardType: 'decimal-pad',
-            onChangeText: amountChangeHandler,
+            onChangeText: inputChangeHandler.bind(this,'amount'),
+            value:amount
           }}
         />
         <Input
@@ -41,7 +41,8 @@ export default function ExpenseForm() {
           textInputConfig={{
             placeholder: 'YYYY-MM-DD',
             maxLength: 10,
-            onChangeText: () => {},
+            onChangeText: inputChangeHandler.bind(this,'date'),
+            value:date
           }}
         />
       </View>
@@ -52,6 +53,8 @@ export default function ExpenseForm() {
         label="Description"
         textInputConfig={{
           multiline: true,
+          onChangeText: inputChangeHandler.bind(this,'title'),
+          value:title
         }}
       />
     </View>
