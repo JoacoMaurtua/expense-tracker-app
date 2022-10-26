@@ -12,6 +12,10 @@ export default function ManageExpScreen({ navigation, route }) {
 
   const isEditing = !!editedExpenseId; //con vierto en booleano editedExpenseId acorde a si se cumple o no su condicion
 
+  const defaultValues = expensesContext.expenses.find((defaultExpense)=>
+    defaultExpense.id === editedExpenseId
+  )
+
   //establecer titulo acorde a si se edita o crea un expense
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -43,6 +47,7 @@ export default function ManageExpScreen({ navigation, route }) {
         onCancel={cancelHandler}
         submitLabelButton={isEditing ? 'Edit' : 'Add'}
         onSubmit={confirmHandler}
+        defaultValues={defaultValues}
       />
       {isEditing && (
         <View style={styles.deleteContainer}>

@@ -1,15 +1,18 @@
 import { View, Text } from 'react-native';
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import ExpenseOutput from '../components/ExpenseOutput';
-import {ManageExpensesContext } from '../context/manageExpensesContext';
+import { ManageExpensesContext } from '../context/manageExpensesContext';
 
 export default function AllExpScreen() {
-
-  const expensesCotext = useContext(ManageExpensesContext)
+  const expensesCotext = useContext(ManageExpensesContext);
 
   return (
     <>
-      <ExpenseOutput expenses={expensesCotext.expenses} periodName="Foreva" fallback="No expenses in the last times"/>
+      <ExpenseOutput
+        expenses={expensesCotext.expenses}
+        periodName="Foreva"
+        fallbackText="No expenses in the last times"
+      />
     </>
   );
 }

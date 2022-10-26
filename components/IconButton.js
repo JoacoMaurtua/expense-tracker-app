@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
 
   icon:{
     fontSize: 30,
-    marginRight: 30,
+    marginTop: 10,
   }
 })

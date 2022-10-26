@@ -12,7 +12,7 @@ export default function Input({label, style, textInputConfig, name, value}) {
   return (
     <View style={[styles.inputContainer, style]}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput style={inputStyles} {...textInputConfig} name={name} value={value}/>
+      <TextInput style={inputStyles} {...textInputConfig}/>
     </View>
   )
 };

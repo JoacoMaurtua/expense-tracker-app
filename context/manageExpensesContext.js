@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react';
-import { tempExpenses } from '../Util/DUMMY';
+//import { tempExpenses } from '../Util/DUMMY';
 
 export const ManageExpensesContext = createContext({
   expenses: [],
@@ -35,7 +35,8 @@ function expensesReducer(state, action) { //state es un arreglo de expenses(obje
 
 
 function ExpensesContextProvider({ children }) {
-  const [expensesState, dispatch] = useReducer(expensesReducer, tempExpenses);
+  const [expensesState, dispatch] = useReducer(expensesReducer,[]); //ahora arranco con un arreglo vacio
+
 
   //actions:
   function addExpense(expenseData) {

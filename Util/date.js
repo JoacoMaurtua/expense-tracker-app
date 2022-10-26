@@ -1,6 +1,6 @@
 //Obtener el formato de la fecha
 export function getFormattedDate(date){
-  return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`
+  return date.toISOString().slice(0,10);
 };
 
 //Obtener la fecha de una cantidad especifica de dias
