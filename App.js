@@ -35,6 +35,7 @@ function MyTabsNavigator() {
               navigation.navigate('ManageExpense');
             }}
             color={tintColor}
+            
           />
         ),
       })}

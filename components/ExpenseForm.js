@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Input from './Input';
 import Button from './Button';
 import { getFormattedDate } from '../Util/date';
+import { GlobalStyles } from '../styles';
 
 export default function ExpenseForm({
   onCancel,
@@ -11,9 +12,18 @@ export default function ExpenseForm({
   defaultValues,
 }) {
   const [inputs, setInputs] = useState({
-    amount: defaultValues ? defaultValues.amount.toString() : '',
-    date: defaultValues ? getFormattedDate(defaultValues.date) : '',
-    title: defaultValues ? defaultValues.title : '',
+    amount: {
+      value: defaultValues ? defaultValues.amount.toString() : '',
+      isValid: true, //convierte a booleano
+    },
+    date: {
+      value: defaultValues ? getFormattedDate(defaultValues.date) : '',
+      isValid: true,
+    },
+    title: {
+      value: defaultValues ? defaultValues.title : '',
+      isValid: true,
+    },
   });
 
   //console.log(defaultValues.amount.toString());
@@ -21,10 +31,10 @@ export default function ExpenseForm({
   const { amount, date, title } = inputs;
 
   function inputChangeHandler(inputIdentifer, enteredValue) {
-    setInputs((curInputValues) => {
+    setInputs((curInputs) => {
       return {
-        ...curInputValues,
-        [inputIdentifer]: enteredValue, //[name]:value
+        ...curInputs,
+        [inputIdentifer]: { value: enteredValue, isValid: true }, //[name]:value
       };
     });
   }
@@ -32,23 +42,32 @@ export default function ExpenseForm({
   function submitHandler() {
     //nuevo expense editado o agregado
     const expenseData = {
-      amount: +amount, //convertir string a entero
-      date: new Date(date),
-      title: title,
+      amount: +amount.value, //convertir string a entero
+      date: new Date(date.value),
+      title: title.value,
     };
 
     //validacion de campos
     const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
-    const dateIsValid = expenseData.date.toString() !== 'Invalid Date' 
-    const titleIsValid =  expenseData.title.trim().length > 0;
+    const dateIsValid = expenseData.date.toString() !== 'Invalid Date';
+    const titleIsValid = expenseData.title.trim().length > 0;
 
-    if(!amountIsValid || !dateIsValid || !titleIsValid ){
-      Alert.alert('Invalid Inputs! Please check your inputs');
+    if (!amountIsValid || !dateIsValid || !titleIsValid) {
+      /* Alert.alert('Invalid Inputs! Please check your inputs'); */
+      setInputs((curInputs) => {
+        return {
+          amount: { value: curInputs.amount.value, isValid: amountIsValid },
+          date: { value: curInputs.date.value, isValid: dateIsValid },
+          title: { value: curInputs.title.value, isValid: titleIsValid },
+        };
+      });
       return;
     }
 
     onSubmit(expenseData);
   }
+
+  const formIsInvalid = !inputs.amount.isValid || !inputs.date.isValid || !inputs.title.isValid 
 
   return (
     <View style={styles.form}>
@@ -60,8 +79,9 @@ export default function ExpenseForm({
           textInputConfig={{
             keyboardType: 'decimal-pad',
             onChangeText: inputChangeHandler.bind(this, 'amount'),
-            value: amount,
+            value: amount.value,
           }}
+          invalid={!amount.isValid}
         />
         <Input
           name="date"
@@ -72,8 +92,9 @@ export default function ExpenseForm({
             placeholder: 'YYYY-MM-DD',
             maxLength: 10,
             onChangeText: inputChangeHandler.bind(this, 'date'),
-            value: date,
+            value: date.value,
           }}
+          invalid={!date.isValid}
         />
       </View>
 
@@ -84,9 +105,13 @@ export default function ExpenseForm({
         textInputConfig={{
           multiline: true,
           onChangeText: inputChangeHandler.bind(this, 'title'),
-          value: title,
+          value: title.value,
         }}
+        invalid={!title.isValid}
       />
+      {formIsInvalid && (
+        <Text style={styles.errorText}>Invalid input values - please check your entered data!</Text>
+      )}
       <View style={styles.buttons}>
         <Button style={styles.button} mode="flat" onPress={onCancel}>
           Cancel
@@ -131,4 +156,9 @@ const styles = StyleSheet.create({
     minWidth: 120,
     marginHorizontal: 8,
   },
+  errorText:{
+    textAlign: 'center',
+    color: GlobalStyles.colors.error50,
+    margin: 8
+  }
 });

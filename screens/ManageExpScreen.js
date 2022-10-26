@@ -56,6 +56,7 @@ export default function ManageExpScreen({ navigation, route }) {
             color={'#f08080'}
             size={36}
             onPress={deleteExpense}
+            style={styles.iconTrash}
           />
         </View>
       )}
@@ -77,6 +78,10 @@ const styles = StyleSheet.create({
     borderTopColor: GlobalStyles.colors.primary200,
     alignItems: 'center',
   },
+
+  iconTrash:{
+    marginRight: 0,
+  }
 });
 
 /* 
