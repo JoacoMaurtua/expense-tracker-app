@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import React, { useState } from 'react';
 import Input from './Input';
 import Button from './Button';

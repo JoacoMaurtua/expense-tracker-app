@@ -1,13 +1,25 @@
 import { View, Text } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ExpenseOutput from '../components/ExpenseOutput';
 import { ManageExpensesContext } from '../context/manageExpensesContext';
 import { getDateMinusDays } from '../Util/date';
+import { fetchExpenseData } from '../Util/http';
 
 export default function RecentExpScreen() {
-  const expensesCotext = useContext(ManageExpensesContext);
+  //const expensesCotext = useContext(ManageExpensesContext);
 
-  const recentExpenses = expensesCotext.expenses.filter((expense) => {
+  const [fetchExpenses, setFetchExpenses] = useState([]);
+
+  //extrayendo data del backend
+  useEffect(() => {
+    const getExpenseData = async () => {
+      const expenses = await fetchExpenseData();
+      setFetchExpenses(expenses);
+    };
+    getExpenseData();
+  }, []);
+
+  const recentExpenses = fetchExpenses.filter((expense) => {
     const today = new Date(); //fecha actual
     const date7DaysAgo = getDateMinusDays(today, 7); //fecha de hace 7 dias
 
