@@ -35,5 +35,16 @@ export const fetchExpenseData = async () => {
 }
 
 
+//Editar un expense
+export const editExpenseData = (id, expenseData) => {
+  return axios.put(`${URL_BACKEND}/expenses/${id}.json`, expenseData)
+}
+
+
+//Eliminar un expense
+export const deleteExpenseData = (id) => {
+  return axios.delete(`${URL_BACKEND}/expenses/${id}.json`)
+}
+
 
 
