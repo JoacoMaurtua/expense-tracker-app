@@ -3,12 +3,14 @@ import axios from 'axios';
 const URL_BACKEND = 'https://rn-expense-tracker-7cac9-default-rtdb.firebaseio.com'; 
 
 //Enviar expenses a la base de datos
-export const storeExpenseData = (expenseData) => {
+export const storeExpenseData = async (expenseData) => {
   //solicitus POST al REST API de firebase:
-  axios.post(
+  const response = await axios.post(
     `${URL_BACKEND}/expenses.json`,
     expenseData
   );
+  const id = response.data.name; //name es el id que usa firebase
+  return id;
 };
 
 //Extraer expenses de la base de datos

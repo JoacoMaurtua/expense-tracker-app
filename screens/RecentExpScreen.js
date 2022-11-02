@@ -6,20 +6,18 @@ import { getDateMinusDays } from '../Util/date';
 import { fetchExpenseData } from '../Util/http';
 
 export default function RecentExpScreen() {
-  //const expensesCotext = useContext(ManageExpensesContext);
-
-  const [fetchExpenses, setFetchExpenses] = useState([]);
+  const expensesCotext = useContext(ManageExpensesContext);
 
   //extrayendo data del backend
   useEffect(() => {
     const getExpenseData = async () => {
       const expenses = await fetchExpenseData();
-      setFetchExpenses(expenses);
+      expensesCotext.setExpenses(expenses);
     };
     getExpenseData();
   }, []);
 
-  const recentExpenses = fetchExpenses.filter((expense) => {
+  const recentExpenses = expensesCotext.expenses.filter((expense) => {
     const today = new Date(); //fecha actual
     const date7DaysAgo = getDateMinusDays(today, 7); //fecha de hace 7 dias
 

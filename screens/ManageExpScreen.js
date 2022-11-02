@@ -33,12 +33,12 @@ export default function ManageExpScreen({ navigation, route }) {
     navigation.goBack();
   }
 
-  function confirmHandler(expenseData) {
+  async function confirmHandler(expenseData) {
     if (isEditing) {
       expensesContext.updateExpense(editedExpenseId, expenseData);
     } else {
-      storeExpenseData(expenseData)
-      expensesContext.addExpense(expenseData);
+      const id = await storeExpenseData(expenseData)
+      expensesContext.addExpense({...expenseData, id:id});
     }
     navigation.goBack();
   }

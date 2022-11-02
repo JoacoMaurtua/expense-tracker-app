@@ -6,14 +6,14 @@ export const ManageExpensesContext = createContext({
   addExpense: ({ title, amount, date }) => {},
   deleteExpense: (id) => {},
   updateExpense: (id, { title, amount, date }) => {},
+  setExpenses: (expenses)=>{},
 });
 
 //reducer(logica de cada funcion)
 function expensesReducer(state, action) { //state es un arreglo de expenses(objetos)
   switch (action.type) {
     case 'ADD':
-      const id = new Date().toDateString + Math.random().toString();
-      return [{ ...action.payload, id: id }, ...state]; //retorno (objeto con expenseData + id provicional) + expenses ya existentes
+      return [action.payload, ...state]; //retorno (objeto con expenseData + id provicional) + expenses ya existentes
     
     case 'UPDATE':
       const updatableExpenseIndex = state.findIndex( //determinar la posicion del objeto a actualizar
@@ -26,7 +26,11 @@ function expensesReducer(state, action) { //state es un arreglo de expenses(obje
       return updatedExpenses;
 
     case 'DELETE':
-      return state.filter((expense) => expense.id !== action.payload)
+      return state.filter((expense) => expense.id !== action.payload);
+
+    case 'SET':
+      const inverted = action.payload.reverse();
+      return inverted //devuelve el array de expenses
 
     default:
       return state;
@@ -51,11 +55,16 @@ function ExpensesContextProvider({ children }) {
     dispatch({ type: 'UPDATE', payload: { id:id, data:expenseData } });
   }
 
+  function setExpenses(expenses){
+    dispatch({ type: 'SET', payload: expenses})
+  }
+
   const value = {
     expenses: expensesState,
     addExpense: addExpense,
     deleteExpense: deleteExpense,
-    updateExpense: updateExpense
+    updateExpense: updateExpense,
+    setExpenses: setExpenses,
   }
 
   return (
@@ -71,3 +80,7 @@ export default ExpensesContextProvider;
 
 //Nota: De alguna manera useReducer tiene la misma mecanica que useState
 //      pero con varias piezas de estado a la vez
+
+
+//Nota: Para poder eliminar y editar un elemento, cuanso se trabaja con un backend tipo CMS
+//      es necesario trabajar con el id que genera automaticamente el CMS
