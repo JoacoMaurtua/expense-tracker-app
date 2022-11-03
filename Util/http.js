@@ -37,7 +37,7 @@ export const fetchExpenseData = async () => {
 
 //Editar un expense
 export const editExpenseData = (id, expenseData) => {
-  return axios.put(`${URL_BACKEND}/expenses/${id}.json`, expenseData)
+  return axios.put(`${URL_BACKEND}/expenses/${id}.jso`, expenseData)
 }
 
 

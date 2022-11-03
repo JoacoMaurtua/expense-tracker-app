@@ -1,13 +1,15 @@
-import { View, Text } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import ExpenseOutput from '../components/ExpenseOutput';
 import { ManageExpensesContext } from '../context/manageExpensesContext';
 import { getDateMinusDays } from '../Util/date';
 import { fetchExpenseData } from '../Util/http';
 import Loader from '../components/Loader';
+import ErrorOverlay from '../components/ErrorOverlay';
 
 export default function RecentExpScreen() {
   const [isfetching, setIsFetching] = useState(true);
+
+  const [error, setError] = useState();
 
   const expensesCotext = useContext(ManageExpensesContext);
 
@@ -15,9 +17,13 @@ export default function RecentExpScreen() {
   useEffect(() => {
     const getExpenseData = async () => {
       setIsFetching(true);
-      const expenses = await fetchExpenseData();
+      try {
+        const expenses = await fetchExpenseData();
+        expensesCotext.setExpenses(expenses);
+      } catch (error) {
+        setError('Could not fetch data!');
+      }
       setIsFetching(false);
-      expensesCotext.setExpenses(expenses);
     };
     getExpenseData();
   }, []);
@@ -31,6 +37,14 @@ export default function RecentExpScreen() {
 
   if (isfetching) {
     return <Loader />;
+  }
+
+  function onError(){
+    setError(null)
+  }
+
+  if (error && !isfetching) {
+    return <ErrorOverlay message={error} onConfirm={onError}/>;
   }
 
   return (

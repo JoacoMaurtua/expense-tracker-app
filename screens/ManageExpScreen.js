@@ -10,9 +10,12 @@ import {
   deleteExpenseData,
 } from '../Util/http';
 import Loader from '../components/Loader';
+import ErrorOverlay from '../components/ErrorOverlay';
 
 export default function ManageExpScreen({ navigation, route }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [error, setError] = useState();
 
   const editedExpenseId = route.params?.expenseId;
 
@@ -32,10 +35,15 @@ export default function ManageExpScreen({ navigation, route }) {
   }, [navigation, isEditing]);
 
   async function deleteExpense() {
-    expensesContext.deleteExpense(editedExpenseId);
-    setIsSubmitting(true)
-    await deleteExpenseData(editedExpenseId);
-    navigation.goBack();
+    setIsSubmitting(true);
+    try {
+      expensesContext.deleteExpense(editedExpenseId);
+      await deleteExpenseData(editedExpenseId);
+      navigation.goBack();
+    } catch (error) {
+      setError('Could not delete this expense, please try later');
+      setIsSubmitting(false);
+    }
   }
 
   function cancelHandler() {
@@ -43,19 +51,33 @@ export default function ManageExpScreen({ navigation, route }) {
   }
 
   async function confirmHandler(expenseData) {
-    setIsSubmitting(true)
-    if (isEditing) {
-      expensesContext.updateExpense(editedExpenseId, expenseData);
-      await editExpenseData(editedExpenseId, expenseData);
-    } else {
-      const id = await storeExpenseData(expenseData);
-      expensesContext.addExpense({ ...expenseData, id: id });
+    setIsSubmitting(true);
+    try {
+      if (isEditing) {
+        expensesContext.updateExpense(editedExpenseId, expenseData);
+        await editExpenseData(editedExpenseId, expenseData);
+      } else {
+        const id = await storeExpenseData(expenseData);
+        expensesContext.addExpense({ ...expenseData, id: id });
+      }
+      navigation.goBack();
+    } catch (error){
+        setError('Could not save this expense, please try later')
+        setIsSubmitting(false);
     }
-    navigation.goBack();
+ 
   }
 
   if (isSubmitting) {
     return <Loader />;
+  }
+
+  function onError() {
+    setError(null);
+  }
+
+  if (error && !isSubmitting) {
+    return <ErrorOverlay message={error} onConfirm={onError} />;
   }
 
   return (
