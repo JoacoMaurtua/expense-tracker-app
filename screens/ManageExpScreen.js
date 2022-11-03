@@ -1,21 +1,28 @@
 import { View, StyleSheet } from 'react-native';
-import React, { useLayoutEffect, useContext } from 'react';
+import React, { useLayoutEffect, useContext, useState } from 'react';
 import IconButton from '../components/IconButton';
 import { GlobalStyles } from '../styles';
 import { ManageExpensesContext } from '../context/manageExpensesContext';
 import ExpenseForm from '../components/ExpenseForm';
-import { storeExpenseData, editExpenseData, deleteExpenseData } from '../Util/http';
+import {
+  storeExpenseData,
+  editExpenseData,
+  deleteExpenseData,
+} from '../Util/http';
+import Loader from '../components/Loader';
 
 export default function ManageExpScreen({ navigation, route }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const editedExpenseId = route.params?.expenseId;
 
   const expensesContext = useContext(ManageExpensesContext); //extrayendo el contexto de estados
 
   const isEditing = !!editedExpenseId; //con vierto en booleano editedExpenseId acorde a si se cumple o no su condicion
 
-  const defaultValues = expensesContext.expenses.find((defaultExpense)=>
-    defaultExpense.id === editedExpenseId
-  )
+  const defaultValues = expensesContext.expenses.find(
+    (defaultExpense) => defaultExpense.id === editedExpenseId
+  );
 
   //establecer titulo acorde a si se edita o crea un expense
   useLayoutEffect(() => {
@@ -26,7 +33,8 @@ export default function ManageExpScreen({ navigation, route }) {
 
   async function deleteExpense() {
     expensesContext.deleteExpense(editedExpenseId);
-    await deleteExpenseData(editedExpenseId)
+    setIsSubmitting(true)
+    await deleteExpenseData(editedExpenseId);
     navigation.goBack();
   }
 
@@ -35,14 +43,19 @@ export default function ManageExpScreen({ navigation, route }) {
   }
 
   async function confirmHandler(expenseData) {
+    setIsSubmitting(true)
     if (isEditing) {
       expensesContext.updateExpense(editedExpenseId, expenseData);
-      await editExpenseData(editedExpenseId, expenseData)
+      await editExpenseData(editedExpenseId, expenseData);
     } else {
-      const id = await storeExpenseData(expenseData)
-      expensesContext.addExpense({...expenseData, id:id});
+      const id = await storeExpenseData(expenseData);
+      expensesContext.addExpense({ ...expenseData, id: id });
     }
     navigation.goBack();
+  }
+
+  if (isSubmitting) {
+    return <Loader />;
   }
 
   return (
@@ -83,9 +96,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  iconTrash:{
+  iconTrash: {
     marginRight: 0,
-  }
+  },
 });
 
 /* 

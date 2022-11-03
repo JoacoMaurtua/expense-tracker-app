@@ -4,14 +4,19 @@ import ExpenseOutput from '../components/ExpenseOutput';
 import { ManageExpensesContext } from '../context/manageExpensesContext';
 import { getDateMinusDays } from '../Util/date';
 import { fetchExpenseData } from '../Util/http';
+import Loader from '../components/Loader';
 
 export default function RecentExpScreen() {
+  const [isfetching, setIsFetching] = useState(true);
+
   const expensesCotext = useContext(ManageExpensesContext);
 
   //extrayendo data del backend
   useEffect(() => {
     const getExpenseData = async () => {
+      setIsFetching(true);
       const expenses = await fetchExpenseData();
+      setIsFetching(false);
       expensesCotext.setExpenses(expenses);
     };
     getExpenseData();
@@ -23,6 +28,10 @@ export default function RecentExpScreen() {
 
     return expense.date >= date7DaysAgo && expense.date <= today;
   });
+
+  if (isfetching) {
+    return <Loader />;
+  }
 
   return (
     <>
